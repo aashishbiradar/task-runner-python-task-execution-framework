@@ -1,5 +1,5 @@
 import logging
-import threading
+from threading import Thread
 import time
 
 def thread_function(name):
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     threads = list()
     for index in range(10):
         logging.info("Main    : create and start thread %d.", index)
-        x = threading.Thread(target=thread_function, args=(index,))
+        x = Thread(target=thread_function, args=(index,))
         threads.append(x)
         x.start()
 

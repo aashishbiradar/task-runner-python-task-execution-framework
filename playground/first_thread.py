@@ -1,5 +1,5 @@
 import logging
-import threading
+from threading import Thread
 import time
 
 def thread_function(name):
@@ -13,8 +13,8 @@ if __name__ == "__main__":
                         datefmt="%H:%M:%S")
 
     logging.info("Main    : before creating threads")
-    x = threading.Thread(target=thread_function, args=('x',))
-    y = threading.Thread(target=thread_function, args=('y',))
+    x = Thread(target=thread_function, args=('x',))
+    y = Thread(target=thread_function, args=('y',))
     logging.info("Main    : before running threads")
     x.start()
     y.start()
