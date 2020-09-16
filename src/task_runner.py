@@ -22,13 +22,20 @@ if __name__ == "__main__":
     taskq = Queue()
 
     # fetch tasks to execute
-    for i in range(5):
+    for i in range(20):
+        # hello task
         data = {'msg':'TASK RUNNER' }
         task = Task(i, 'hello', data)
         taskq.put(task)
-    
+
+        # random storage task
+        data2 = {}
+        task2 = Task(i+20, 'store_random', data2)
+        taskq.put(task2)
+
+    print(taskq)
     # execute tasks
-    with ThreadPoolExecutor(max_workers=2) as executor:
+    with ThreadPoolExecutor(max_workers=8) as executor:
         while not taskq.empty():
             task = taskq.get()
             executor.submit(task.run)
