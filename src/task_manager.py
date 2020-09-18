@@ -1,20 +1,25 @@
 from logger_manager import logger
-from models import Tasks
+
+import models
 
 class TaskManager():
     def submit_tasks(self, tasksList):
         try:
-            Tasks.objects.insert(tasksList)
+            models.Task.objects.insert(tasksList)
         except Exception as e:
             logger.exception(e)
+    
+    def get_tasks(self):
+        return models.Task.objects(status='NOT_STARTED')
+
 
 if __name__ == "__main__":
 
     # submit tasks to execute
     tasks = []
-    for i in range(5):
+    for i in range(1000):
         # random storage task
-        tasks.append(Tasks(name='store_random'))
+        tasks.append(models.Task(name='store_random'))
     task_manager = TaskManager()
     task_manager.submit_tasks(tasks) 
 
