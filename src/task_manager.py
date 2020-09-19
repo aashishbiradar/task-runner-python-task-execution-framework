@@ -1,16 +1,15 @@
 from logger_manager import logger
-
-import models
+from models import Task
 
 class TaskManager():
     def submit_tasks(self, tasksList):
         try:
-            models.Task.objects.insert(tasksList)
+            Task.objects.insert(tasksList)
         except Exception as e:
             logger.exception(e)
     
     def get_tasks(self):
-        return models.Task.objects(status='NOT_STARTED')
+        return Task.objects(status='NOT_STARTED')
 
 
 if __name__ == "__main__":
@@ -19,7 +18,7 @@ if __name__ == "__main__":
     tasks = []
     for i in range(1000):
         # random storage task
-        tasks.append(models.Task(name='store_random'))
+        tasks.append(Task(name='store_random'))
     task_manager = TaskManager()
     task_manager.submit_tasks(tasks) 
 
