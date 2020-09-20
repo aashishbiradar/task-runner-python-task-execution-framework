@@ -1,10 +1,19 @@
-from flask import Flask
+from flask import Flask, request
+import json
+from task_runner import TaskRunner
+
 app = Flask(__name__)
 
-
-@app.route('/')
+@app.route('/ping')
 def hello_world():
-    return 'Hello, Flask!'
+    return 'pong'
+
+@app.route('/submit-tasks', methods=['POST'])
+def submit_tasks():
+    tasks = request.json['tasks']
+    TaskRunner().submit_tasks(tasks)
+    return {'msg':'success'}
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
