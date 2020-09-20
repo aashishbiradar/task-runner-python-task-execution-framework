@@ -1,7 +1,6 @@
 from logger_manager import logger
 import time, random, string
 import models
-# from models import RandomStore
 
 def hello(data):
     logger.info('Hello '+ str(data['msg']))
