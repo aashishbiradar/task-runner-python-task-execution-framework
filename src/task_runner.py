@@ -1,7 +1,8 @@
-from logger_manager import logger
 from queue import Queue
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep
+
+from logger_manager import logger
 from task import Task
 
 class TaskRunner():
@@ -10,7 +11,15 @@ class TaskRunner():
 
     def submit_tasks(self, tasksList):
         try:
-            Task.objects.insert(tasksList)
+            tasks = list()
+            for t in tasksList:
+                if not isinstance(t, Task):
+                    if 'data' in t: 
+                        t = Task(name = t['name'], data= t['data'])
+                    else:
+                        t = Task(name = t['name'])
+                tasks.append(t)
+            Task.objects.insert(tasks)
         except Exception as e:
             logger.exception(e)
     
@@ -34,6 +43,7 @@ class TaskRunner():
             if not self.queue.empty():
                 self.execute_tasks()
             else:
+                logger.info('No tasks to execute!')
                 sleep(2)
 
 if __name__ == "__main__":
